@@ -5,7 +5,7 @@ our $VERSION = '0.1.0';
 
 # ABSTRACT: Jojo::Base and Jojo::Role for pure Perl environments
 
-use zim 'Module::Spec::V2' => 'try_module', 'need_module';
+use Importer::Zim 'Module::Spec::V2' => 'try_module', 'need_module';
 
 sub import {
 
