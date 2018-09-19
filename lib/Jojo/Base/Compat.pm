@@ -1,7 +1,8 @@
 
-package Jojo::Base;
+package Jojo::Base::Compat;
 
-# ABSTRACT: Mojo::Base + lexical "has"
+our $VERSION = '0.7.0';
+
 use 5.018;
 use strict;
 use warnings;
@@ -16,7 +17,8 @@ BEGIN {
 
 use Carp       ();
 use Mojo::Util ();
-use Sub::Inject 0.2.0 ();
+#use Sub::Inject 0.2.0 ();
+use Importer::Zim ();
 
 use constant ROLES =>
   !!(eval { require Jojo::Role; Jojo::Role->VERSION('0.5.0'); 1 });
@@ -68,8 +70,9 @@ sub import {
 
   my @exports = @{$EXPORT_TAGS{$flag} // []};
   if (@exports) {
-    @_ = $class->_generate_subs($caller, @exports);
-    goto &Sub::Inject::sub_inject;
+    my %exports = $class->_generate_subs($caller, @exports);
+    Importer::Zim::export_to($caller, %exports);
+    #goto &Sub::Inject::sub_inject;
   }
 }
 
