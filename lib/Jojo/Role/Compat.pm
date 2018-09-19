@@ -1,7 +1,8 @@
 
-package Jojo::Role;
+package Jojo::Role::Compat;
 
-# ABSTRACT: Role::Tiny + lexical "with"
+our $VERSION = '0.5.0';
+
 use 5.018;
 use strict;
 use warnings;
@@ -15,7 +16,8 @@ BEGIN {
   our @ISA = qw(Role::Tiny);
 }
 
-use Sub::Inject 0.3.0 ();
+#use Sub::Inject 0.3.0 ();
+use Importer::Zim ();
 
 # Aliasing of Role::Tiny symbols
 BEGIN {
@@ -68,8 +70,9 @@ sub import {
   }
 
   my @exports = @{$EXPORT_TAGS{$flag} // []};
-  @_ = $me->_generate_subs($target, @exports);
-  goto &Sub::Inject::sub_inject;
+  my %exports = $me->_generate_subs($target, @exports);
+  Importer::Zim::export_to($target, %exports);
+  #goto &Sub::Inject::sub_inject;
 }
 
 sub role_provider { $_[0] }
