@@ -1,2 +1,2 @@
 
-Jojo-Role-Compat - The brand new Jojo-Role-Compat
+Jojo::Compat – Jojo::Base and Jojo::Role for pure Perl environments
